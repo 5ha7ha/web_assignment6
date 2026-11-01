@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selector Detective - The Party</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <h1>Selector Detective</h1>
+    <p>AITU birthday party, 19:30 - 22:30. At 21:30 the cake disappeared from the kitchen. Find the thief with jQuery.</p>
+  </header>
+
+  <main class="layout">
+
+    <!-- LEFT: the house -->
+    <section>
+
+      <div class="roof-wrap">
+        <div class="roof"></div>
+        <div class="roof-sign">The Party, 19:30 - 22:30</div>
+      </div>
+
+      <!-- jQuery builds the floors, rooms and guest cards inside this element -->
+      <div id="house"></div>
+
+      <div class="ground"></div>
+
+      <div class="legend">
+        <div class="legend-group">
+          <span class="legend-dot color-red"></span>
+          <span class="legend-dot color-blue"></span>
+          <span class="legend-dot color-green"></span>
+          <span class="legend-dot color-black"></span>
+          <span class="legend-dot color-yellow"></span>
+          <span class="legend-dot color-purple"></span>
+          <span>Clothing color</span>
+        </div>
+        <div class="legend-group">
+          <span class="thing thing-phone"></span> Phone
+          <span class="thing thing-glasses"></span> Glasses
+          <span class="thing thing-bag"></span> Bag
+          <span class="thing thing-cup"></span> Cup
+          <span class="thing thing-crumbs"></span> Cake crumbs
+        </div>
+        <div class="legend-group">
+          <span class="aitu-badge legend-badge"></span> AITU student
+        </div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT: cases and results -->
+    <aside class="side">
+
+      <div class="panel">
+        <h2>Cases</h2>
+        <div id="case-buttons">
+          <button class="case-btn" data-case="1"  title="Who is in the hall?"><span class="case-num">1</span> In the hall</button>
+          <button class="case-btn" data-case="2"  title="Who is dressed in yellow or purple?"><span class="case-num">2</span> Yellow or purple</button>
+          <button class="case-btn" data-case="3"  title="Which AITU students are upstairs?"><span class="case-num">3</span> AITU upstairs</button>
+          <button class="case-btn" data-case="4"  title="Who has glasses or a bag?"><span class="case-num">4</span> Glasses or bag</button>
+          <button class="case-btn" data-case="5"  title="Who came with nothing at all?"><span class="case-num">5</span> Nothing at all</button>
+          <button class="case-btn" data-case="6"  title="Who has a phone but no bag?"><span class="case-num">6</span> Phone, no bag</button>
+          <button class="case-btn" data-case="7"  title="Who arrived between 20:30 and 21:00, both times included?"><span class="case-num">7</span> 20:30 - 21:00</button>
+          <button class="case-btn" data-case="8"  title="Who arrived after 21:00 and is not an AITU student?"><span class="case-num">8</span> After 21:00, not AITU</button>
+          <button class="case-btn" data-case="9"  title="Who stands right next to Askar?"><span class="case-num">9</span> Next to Askar</button>
+          <button class="case-btn" data-case="10" title="Who stands last in each room?"><span class="case-num">10</span> Last in each room</button>
+          <button class="case-btn" data-case="11" title="Who stands third in each room?"><span class="case-num">11</span> Third in each room</button>
+          <button class="case-btn" data-case="12" title="Who stands after Timur in his room?"><span class="case-num">12</span> After Timur</button>
+          <button class="case-btn" data-case="13" title="Who stands right before someone in black?"><span class="case-num">13</span> Before someone in black</button>
+          <button class="case-btn" data-case="14" title="In which room is Aruzhan?"><span class="case-num">14</span> Aruzhan's room</button>
+          <button class="case-btn" data-case="15" title="Which rooms have fewer than 6 guests?"><span class="case-num">15</span> Rooms &lt; 6 guests</button>
+          <button class="case-btn" data-case="16" title="In which rooms does somebody have a cup, but nobody wears glasses?"><span class="case-num">16</span> Cup, no glasses</button>
+          <button class="case-btn" data-case="17" title="Who came first to each room?"><span class="case-num">17</span> First come in each room</button>
+          <button class="case-btn" data-case="18" title="Miras arrives at 21:20 and stands between Askar and Inkar"><span class="case-num">18</span> Miras arrives</button>
+          <button class="case-btn" data-case="19" title="Natasha says goodbye and goes home"><span class="case-num">19</span> Natasha leaves</button>
+          <button class="case-btn case-btn-wide" data-case="20" title="Who took the cake?"><span class="case-num">20</span> Who took the cake?</button>
+        </div>
+      </div>
+
+      <div id="result" class="panel">
+        <h2 id="result-title">Result</h2>
+        <p id="result-count" class="result-count">Click a case to start the investigation.</p>
+        <div id="result-names" class="result-names"></div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- jQuery first, then the shared party code, then this page's script -->
+  <script src="jquery-3.7.1.min.js"></script>
+  <script src="party.js" defer></script>
+  <script src="script.js"></script>
+</body>
+</html>

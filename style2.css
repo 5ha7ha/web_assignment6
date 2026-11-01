@@ -1,0 +1,77 @@
+/* Task 2 styles. Task 1 styles are loaded first from ../task1/style.css.
+   No CSS transitions or animations: all movement is done with jQuery. */
+
+.sort-btn {
+  font: inherit;
+  font-size: 11px;
+  padding: 2px 8px;
+  border: 1px solid #c9bfa9;
+  background: #fff;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.sort-btn:hover { background: #fff3b0; }
+
+.clear-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 9px;
+  font: inherit;
+  font-weight: 700;
+  color: #fff;
+  background: var(--blue);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.clear-btn:hover { background: #163e7c; }
+
+/* ---------- Task 2: guest popup card ---------- */
+#card-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  z-index: 100;
+}
+
+.guest-popup {
+  position: absolute;
+  display: none;                /* jQuery shows it and animates width/height/left/top */
+  overflow: hidden;             /* the card starts tiny, so hide the overflow while it grows */
+  padding: 14px;
+  background: #fff;
+  border: 4px solid var(--ring, var(--c-black));
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  --ring: var(--c-black);
+}
+.guest-popup.color-red    { --ring: var(--c-red); }
+.guest-popup.color-blue   { --ring: var(--c-blue); }
+.guest-popup.color-green  { --ring: var(--c-green); }
+.guest-popup.color-black  { --ring: var(--c-black); }
+.guest-popup.color-yellow { --ring: var(--c-yellow); }
+.guest-popup.color-purple { --ring: var(--c-purple); }
+
+.popup-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.popup-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 3px solid var(--ring);
+  background: #f2efe9;
+}
+.popup-title { margin: 0; font-size: 20px; }
+.popup-info  { margin: 0 0 10px; padding-left: 18px; font-size: 14px; line-height: 1.6; }
+.move-buttons { display: flex; flex-wrap: wrap; gap: 6px; }
+.move-btn {
+  font: inherit;
+  font-size: 12.5px;
+  padding: 5px 10px;
+  border: 1px solid #c9bfa9;
+  background: #faf8f2;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.move-btn:hover { background: #fff3b0; border-color: var(--gold); }

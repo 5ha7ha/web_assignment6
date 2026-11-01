@@ -1,0 +1,373 @@
+/* =========================================================
+   Selector Detective - styles (no CSS transitions or animations)
+
+   Classes the CSS expects (build these with jQuery):
+
+   #house
+     .floor[data-floor]
+       .floor-label                       "FLOOR 2" / "FLOOR 1"
+       .rooms
+         .room[data-room][data-floor]
+           .room-head
+             .room-name
+           .room-guests
+             .guest.color-<color>.aitu    + data-* attributes
+               .avatar-wrap
+                 img.avatar
+                 .aitu-badge              (only for AITU students)
+               .guest-name
+               .guest-time
+               .things
+                 .thing.thing-phone | .thing-glasses | .thing-bag
+                       | .thing-cup | .thing-crumbs
+
+   Colors: color-red, color-blue, color-green, color-black,
+           color-yellow, color-purple
+   Highlight classes: .guest.found, .room.found
+   ========================================================= */
+
+:root {
+  --ink: #2b2a33;
+  --muted: #6b6b76;
+  --sky: #d6ecf8;
+  --roof: #5a3328;
+  --wall: #fbf6ee;
+  --floor-label: #e6c9a8;
+  --grass: #6cbf4b;
+  --soil: #7b4a2e;
+  --gold: #f5b700;
+  --blue: #1d4f9c;
+
+  --c-red: #d9423e;
+  --c-blue: #2f6fd0;
+  --c-green: #2e9a5b;
+  --c-black: #23232b;
+  --c-yellow: #f0a91c;
+  --c-purple: #8a58d1;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  position: relative;
+  font-family: "VT323", "Courier Prime", monospace;
+  color: var(--ink);
+  background: var(--sky);
+}
+
+/* ---------- header ---------- */
+.topbar {
+  padding: 18px 24px 6px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.topbar h1 { margin: 0 0 4px; font-size: 28px; }
+.topbar p  { margin: 0; color: var(--muted); }
+
+/* ---------- page layout ---------- */
+.layout {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 12px 24px 40px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 24px;
+  align-items: start;
+}
+
+/* ---------- roof ---------- */
+.roof-wrap { position: relative; margin: 0 -1.5%; }
+.roof {
+  height: 110px;
+  background: var(--roof);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.roof-sign {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 3px solid var(--roof);
+  border-radius: 10px;
+  padding: 6px 22px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ---------- house body ---------- */
+#house {
+  background: var(--roof);
+  padding: 8px;
+  border-radius: 4px 4px 0 0;
+}
+
+.floor {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.floor:last-child { margin-bottom: 0; }
+
+.floor-label {
+  flex: 0 0 34px;
+  background: var(--floor-label);
+  color: var(--roof);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.25em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.rooms {
+  flex: 1;
+  display: flex;
+  gap: 6px;
+  min-width: 0;
+}
+
+/* ---------- rooms ---------- */
+.room {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 160px;
+  padding: 8px 8px 10px;
+  background: var(--wall);
+}
+/* room widths follow how many guests they have in the picture */
+.room[data-room="balcony"] { flex: 4; background: linear-gradient(#cfe6f7, #eaf5fc); }
+.room[data-room="hall"]    { flex: 6; background: repeating-linear-gradient(90deg, #fbf3e4 0 44px, #f6ead3 44px 88px); }
+.room[data-room="kitchen"] { flex: 6;
+  background:
+    linear-gradient(rgba(0,0,0,.05) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(90deg, rgba(0,0,0,.05) 1px, transparent 1px) 0 0 / 28px 28px,
+    #fdfaf3;
+}
+.room[data-room="living-room"] { flex: 5; background: #fdf8ee; }
+
+.room-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.room-name { font-weight: 800; font-size: 14px; }
+
+.room-guests {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  min-height: 100px;
+}
+
+/* ---------- guest card ---------- */
+.guest {
+  position: relative;          /* needed so animate({top: ...}) can make a jump */
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 92px;
+  padding: 4px 2px 6px;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  --ring: var(--c-black);
+}
+.guest:hover { background: rgba(255, 255, 255, 0.75); }
+
+.guest.color-red    { --ring: var(--c-red); }
+.guest.color-blue   { --ring: var(--c-blue); }
+.guest.color-green  { --ring: var(--c-green); }
+.guest.color-black  { --ring: var(--c-black); }
+.guest.color-yellow { --ring: var(--c-yellow); }
+.guest.color-purple { --ring: var(--c-purple); }
+
+.avatar-wrap {
+  position: relative;
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 3px;
+  border: 3px solid var(--ring);
+  border-radius: 50%;
+  background: #fff;
+}
+.avatar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #f2efe9;
+}
+
+.aitu-badge {
+  position: absolute;
+  top: -5px;
+  right: -7px;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: 2px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aitu-badge::before { content: "\1F393"; font-size: 9px; }
+
+.guest-name {
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.guest-time { font-size: 10.5px; color: var(--muted); }
+.guest-time::before { content: "\25F7  "; }
+
+.things {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+  margin-top: 3px;
+  min-height: 18px;
+}
+
+/* ---------- thing icons ---------- */
+.thing {
+  display: inline-block;
+  font-size: 12px;
+  line-height: 1;
+  padding: 2px 3px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px #e1ddd3;
+}
+.thing-phone::before   { content: "\1F4F1"; }
+.thing-glasses::before { content: "\1F453"; }
+.thing-bag::before     { content: "\1F45C"; }
+.thing-cup::before     { content: "\2615"; }
+.thing-crumbs::before  { content: "\1F370"; }
+
+/* ---------- highlight (added by your jQuery) ---------- */
+.guest.found {
+  background: #fff3b0;
+  box-shadow: 0 0 0 3px var(--gold), 0 6px 14px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+.room.found {
+  outline: 4px solid var(--gold);
+  outline-offset: -4px;
+}
+
+/* ---------- ground + legend ---------- */
+.ground {
+  height: 16px;
+  background: var(--grass);
+  border-bottom: 10px solid var(--soil);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: #fff;
+  border-radius: 12px;
+  font-size: 13px;
+}
+.legend-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.legend-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.legend-dot.color-red    { background: var(--c-red); }
+.legend-dot.color-blue   { background: var(--c-blue); }
+.legend-dot.color-green  { background: var(--c-green); }
+.legend-dot.color-black  { background: var(--c-black); }
+.legend-dot.color-yellow { background: var(--c-yellow); }
+.legend-dot.color-purple { background: var(--c-purple); }
+.legend-badge { position: static; }
+
+/* ---------- side panel ---------- */
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: sticky;
+  top: 12px;
+}
+.panel {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+.panel h2 { margin: 0 0 10px; font-size: 18px; }
+
+#case-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.case-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: inherit;
+  font-size: 12.5px;
+  text-align: left;
+  padding: 7px 8px;
+  border: 1px solid #d7d2c6;
+  background: #faf8f2;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.case-btn:hover  { background: #fff3b0; border-color: var(--gold); }
+.case-btn.active { background: var(--gold); border-color: var(--gold); font-weight: 700; }
+.case-btn-wide   { grid-column: 1 / -1; background: #fde7e5; border-color: #f0b3af; }
+.case-num {
+  flex: 0 0 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-count { margin: 0 0 8px; font-weight: 600; }
+.result-names { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  padding: 3px 10px;
+  background: #fff3b0;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1100px) {
+  .layout { grid-template-columns: 1fr; }
+  .side   { position: static; }
+}
+@media (max-width: 700px) {
+  .layout { padding: 12px; }
+  .avatar-wrap { width: 40px; height: 40px; }
+  .guest-name  { font-size: 10px; }
+  .guest-time  { font-size: 9px; }
+  .roof-sign   { font-size: 12px; padding: 4px 12px; }
+}
